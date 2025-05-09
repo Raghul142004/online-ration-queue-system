@@ -1,0 +1,198 @@
+:root {
+  --primary: #050d65;
+  --hover: #1038d8;
+  --bg: #f4f7fc;
+  --card: #ffffff;
+  --text: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 230px;
+  background: var(--primary);
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.sidebar nav a {
+  display: block;
+  color: #cfdfff;
+  text-decoration: none;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background: var(--hover);
+  color: #fff;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cards {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card strong {
+  font-size: 1.5rem;
+}
+
+
+.actions {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.action-box {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.action-box input {
+  padding: 8px;
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.action-box button {
+  margin-top: 10px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.action-box button:hover {
+  background: var(--hover);
+}
+
+.history-map {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.order-history, .map-box {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.order-history table {
+  width: 70%;
+  margin-top: 10px;
+  border-collapse: collapse;
+}
+
+.order-history th, .order-history td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#map {
+  height: 60%;
+  border-radius: 10px;
+}
+
+.analytics {
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between the charts */
+  flex-wrap: wrap; /* Allow charts to wrap in smaller screen sizes */
+}
+
+.chart-box {
+  flex: 1;
+  max-width: 100%; /* Max width for each chart */
+  min-width: 250px; /* Ensure the chart doesn't get too small */
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#barChart, #pieChart, #lineChart {
+  width: 100%;  /* Ensure the chart fills the available width */
+  height: 600px;  /* Adjust the height based on your preference */
+  background: #f4f7fc;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .chart-box {
+    max-width: 100%;  /* Allow charts to take full width on smaller screens */
+  }
+
+  #barChart, #pieChart {
+    height: 250px;  /* Make charts smaller on smaller screens */
+  }
+}
+
+

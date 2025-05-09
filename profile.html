@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ration Smart Dashboard</title>
+  <link rel="stylesheet" href="./dashboard.css">
+  <style>
+    #languageSelect {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      padding: 5px 10px;
+      font-size: 14px;
+      z-index: 2; 
+    }
+
+    .tooltip {
+      flex-direction: column;
+      position: relative;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: 110%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .main-content {
+      .profile-card {
+        background-color: transparent;
+        z-index: 1;
+      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .login-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #e80000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #1038d8; /* Change the background on hover */
+      transform: scale(1.1); /* Slightly scale the button */
+    }
+
+    body::before {
+      content: "";
+      background: url('rationlogo.jpg') no-repeat center center;
+      background-size: 300px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .main-content,
+    .section,
+    .profile-card {
+      position: relative;
+      z-index: 1;
+      background-color: rgba(255, 255, 255, 0.85);
+    }
+
+    .section {
+      background-color: transparent;
+    }
+
+    .section {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+    }
+
+    .section.active {
+      display: flex;
+    }
+
+    #chatbotContainer {
+      position: fixed;
+      bottom: 40px;
+      right: 54px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #007bff, #004080);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    #chatbotContainer:hover {
+      transform: scale(1.05);
+    }
+
+    #chatbotContainer img {
+      width: 170px;
+      height: 160px;
+      border-radius: 50%;
+      animation: pulse-glow 2.5s infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 12px rgba(0, 123, 255, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+      }
+    }
+
+    #chatbotLabel {
+      position: absolute;
+      top: -35px;
+      font-size: 15px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ffff;
+      text-shadow: 0 0 3px #00ffff, 0 0 7px #00ffff, 0 0 10px #00ffff;
+      animation: flickerGlow 2s infinite alternate;
+      background-color: rgba(14, 72, 232, 0.89);
+      padding: 4px 12px;
+      border-radius: 8px;
+      z-index: 4;
+    }
+
+    .flicker {
+      animation: flickerLetter 1.5s infinite;
+    }
+
+    @keyframes flickerGlow {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes flickerLetter {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+      }
+      20%, 22%, 24%, 55% {
+        opacity: 0.3;
+      }
+    }
+
+    #chatbotContainer:hover #chatbotLabel {
+      opacity: 1;
+    }
+
+  </style>
+</head>
+<body>
+
+<select id="languageSelect" onchange="changeLanguage()">
+  <option value="en">English</option>
+  <option value="ta">தமிழ் (Tamil)</option>
+  <option value="hi">हिंदी (Hindi)</option>
+</select>
+
+<div class="sidebar">
+  <h2>Smart Ration System</h2>
+  <ul>
+    <li class="tooltip" onclick="showSection('profile')">Profile
+      <span class="tooltiptext">View Profile</span>
+    </li>
+    <li class="tooltip" onclick="showSection('products')">Products
+      <span class="tooltiptext">Select Products</span>
+    </li>
+    <li class="tooltip" onclick="showSection('shops')">Nearby Shops
+      <span class="tooltiptext">Choose a Shop</span>
+    </li>
+    <li class="tooltip" onclick="showSection('slots')">Book Slot
+      <span class="tooltiptext">Book Your Slot</span>
+    </li>
+    <li class="tooltip" onclick="showSection('payment')">Payment
+      <span class="tooltiptext">View Summary</span>
+    </li>
+    <li class="tooltip" onclick="showSection('settings')">Settings
+      <span class="tooltiptext">Change Settings</span>
+    </li>
+  </ul>
+</div>
+
+<div class="main-content">
+  <section id="profile" class="section active">
+    <h2 id="profileTitle">Profile Information</h2>
+    <div class="profile-card">
+      <div class="profile-info">
+        <p><strong id="nameLabel">Name:</strong> </p>
+        <p><strong id="cardLabel">Card Number:</strong> </p>
+        <p><strong id="dobLabel">DOB:</strong> </p>
+        <p><strong id="addressLabel">Address:</strong></p>
+      </div>
+    </div>
+
+    <h2 id="notificationsTitle">Notifications</h2>
+    <div class="notification-box">
+      <marquee id="notificationsMarquee">Rice, Wheat, Sugar, Oil Available Now!</marquee>
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="showSection('products')" class="next-button" id="nextProductsButton">Next: Select Products</button>
+    </div>
+  </section>
+
+  <section id="products" class="section">
+    <h2 id="productsTitle">Select Products</h2>
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="nav-buttons">
+      <button onclick="showSection('shops')" class="next-button" id="nextShopsButton">Next: Choose Shop</button>
+    </div>
+  </section>
+
+  <section id="shops" class="section">
+    <h2 id="shopsTitle">Select Nearby Shop</h2>
+    <select id="shopSelect" class="shop-dropdown">
+      <option value="T. Nagar">T. Nagar</option>
+      <option value="Anna Nagar">Anna Nagar</option>
+      <option value="Velachery">Velachery</option>
+      <option value="Tambaram">Tambaram</option>
+      <option value="Adyar">Adyar</option>
+      <option value="Guindy">Guindy</option>
+      <option value="Chrompet">Chrompet</option>
+    </select>
+    <div class="nav-buttons">
+      <button onclick="showSection('slots')" class="next-button" id="nextSlotsButton">Next: Book Slot</button>
+    </div>
+  </section>
+
+  <section id="slots" class="section">
+    <h2 id="slotsTitle">Book Slots</h2>
+    <input type="date" id="selectDate" style="width: 600px;height: 50px;" onchange="updateSlots()">
+    <div id="slotsGrid" class="slots-grid"></div>
+
+    <!-- Legend for slot filling status -->
+    <div id="slotLegend" style="margin-top: 20px; display: flex; gap: 20px; justify-content: center;">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <div style="width: 16px; height: 16px; background-color: red; border-radius: 3px;"></div>
+        <span style="font-size: 14px;">Quick Filling</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <div style="width: 16px; height: 16px; background-color: yellow; border-radius: 3px;"></div>
+        <span style="font-size: 14px;">Moderate Filling</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <div style="width: 16px; height: 16px; background-color: green; border-radius: 3px;"></div>
+        <span style="font-size: 14px;">Slow Filling</span>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="showSection('payment')" class="next-button" id="nextPaymentButton">Next: Payment</button>
+    </div>
+  </section>
+
+  <section id="payment" class="section">
+    <h2 id="paymentTitle">Payment Confirmation</h2>
+    <div id="summary"></div>
+    <div class="nav-buttons">
+      <button onclick="confirmSlot()" class="next-button" id="confirmSlotButton">Confirm Slot</button>
+      <button onclick="cancelSlot()" class="next-button" id="cancelSlotButton">Cancel Slot</button>
+      <button onclick="showSection('profile')" class="next-button" id="homeButton">Home</button>
+    </div>
+  </section>
+
+  <section id="settings" class="section">
+    <h2 id="settingsTitle">Settings</h2>
+    <ul class="settings-list">
+      <li>Change Password</li>
+      <li>Notification Settings</li>
+      <button type="submit" class="login-btn" id="loginButton" onclick=" window.location.href = 'login.html'" >Logout</button>
+    </ul>
+  </section>
+</div>
+
+<!-- JARVIS BOT HTML -->
+<div id="chatbotContainer" onclick="openJarvis()">
+  <div id="chatbotLabel">J<span class="flicker">A</span>R<span class="flicker">V</span>I<span class="flicker">S</span></div>
+  <img src="chatbot.gif" alt="Jarvis Bot">
+</div>
+
+<script src="dashboard.js"></script>
+
+<script>
+  function loadUserDetails() {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    if (userDetails) {
+      const language = document.getElementById("languageSelect").value;
+      document.getElementById("nameLabel").textContent = `Name: ${userDetails.name[language]}`;
+      document.getElementById("cardLabel").textContent = `Card Number: ${userDetails.cardNumber}`;
+      document.getElementById("dobLabel").textContent = `DOB: ${userDetails.dob}`;
+      document.getElementById("addressLabel").textContent = `Address: ${userDetails.address[language]}`;
+    } else {
+      alert("No user details found. Please log in first.");
+      window.location.href = "login.html";
+    }
+  }
+
+  function changeLanguage() {
+    loadUserDetails();
+  }
+
+  window.onload = loadUserDetails;
+
+  function openJarvis() {
+    window.location.href = "chatbot.html";
+  }
+</script>
+
+</body>
+</html>

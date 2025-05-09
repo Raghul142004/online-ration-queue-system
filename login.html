@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Ration Queue - Login</title>
+  <link rel="stylesheet" href="login.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 2px;
+      display: none;
+    }
+
+    .captcha-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+    }
+
+    .refresh-btn {
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
+    .header-btn {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: white;
+      border: none;
+      margin: 6px;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .header-btn:hover {
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    header {
+      background-color: #063f7b;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px;
+      margin: 10px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-left img {
+      height: 50px;
+      width: auto;
+    }
+
+    .container {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+      flex: 1; /* push footer down */
+    }
+
+    .left-panel, .right-panel {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      flex: 1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    select#language {
+      padding: 6px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background-color: #e6e6e6;
+      font-size: 12px;
+      color: #333;
+    }
+
+    footer p {
+      margin: 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="rationlogo.jpg"alt="Tamil Nadu Government Logo">
+    <h1 id="mainTitle">Smart Ration Queue System</h1> 
+  </div>
+  <div class="header-right" style="display: flex; align-items: center; gap: 10px;">
+    <button class="header-btn" onclick="goToAdmin()">Admin</button>
+    <select id="language" onchange="changeLanguage()">
+      <option value="en">English</option>
+      <option value="ta">தமிழ் (Tamil)</option>
+      <option value="hi">हिंदी (Hindi)</option>
+    </select>
+  </div>
+</header>
+
+<div class="container">
+  <div class="left-panel">
+    <h2 id="subTitleTop">Skip the Queue, Book Online!</h2>
+    <p id="description">Easily book your ration slot without standing in long lines.</p>
+    <img src="./image/ration.jpg" alt="Queue Illustration" style="width: 100%; height:500px; max-width: 100%; border-radius: 8px; object-fit: contain; display: block;">
+    <h2 id="subTitleBottom">Be a Smart Citizen</h2>
+  </div>
+
+  <div class="right-panel">
+    <h2 id="loginTitle">Login</h2>
+    <label for="rationCard" id="labelRation">Enter Your Phone Number</label>
+    <input type="text" id="rationCard" placeholder="Enter your Phone Number">
+    <small id="rationError" class="error-message"></small>
+    <button onclick="generateOTP()" id="generateOTPBtn">Generate OTP</button>
+
+    <label for="otp" id="labelOTP">Enter OTP</label>
+    <input type="text" id="otp" placeholder="Enter OTP" disabled>
+    <small id="otpError" class="error-message"></small>
+
+    <label for="captchaInput" id="labelCaptcha">Captcha</label>
+    <div class="captcha-box">
+      <span id="captcha">AB12C</span>
+      <button onclick="generateCaptcha()" class="refresh-btn">↻</button>
+    </div>
+    <input type="text" id="captchaInput" placeholder="Enter Captcha">
+    <small id="captchaError" class="error-message"></small>
+
+    <div class="checkboxes">
+      <div class="checkbox-group">
+        <input type="checkbox" id="prefetch">
+        <label for="prefetch" id="prefetchLabel">Prefetch details while logging in</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="consent">
+        <label for="consent" id="consentLabel">I authorize data usage for booking and authentication.</label>
+      </div>
+      <small id="consentError" class="error-message"></small>
+    </div>
+
+    <button onclick="submitLogin()" id="submitBtn">Submit</button>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Smart Ration. All rights reserved.</p>
+  <p>This portal belongs to Smart Ration,| Privacy Policy | Terms of Use</p>
+</footer>
+
+<script src="login.js"></script>
+<script>
+  // Mock database of user details with translations
+  const userDatabase = {
+    "6380144641": {
+      name: {
+        en: "Raghul Rathore",
+        ta: "ராகுல் ரதோர்",
+        hi: "राहुल राठौर"
+      },
+      dob: "14-10-2004",
+      cardNumber: "1234 5678 9012 3456",
+      address: {
+        en: "Mamandur Village, Kanchipuram",
+        ta: "மாமண்டூர் கிராமம், காஞ்சிபுரம்",
+        hi: "मामंडूर गांव, कांचीपुरम"
+      }
+    },
+    "7639891151": {
+      name: {
+        en: "Vignesh",
+        ta: "விக்னேஷ்",
+        hi: "विग्नेश"
+      },
+      dob: "04-10-2004",
+      cardNumber: "9876 5432 1098 7654",
+      address: {
+        en: "Arakkonam, Ranipet",
+        ta: "அரக்கோணம், ராணிப்பேட்டை",
+        hi: "अरक्कोनम, रानीपेट"
+      }
+    },
+    "8248156152": {
+      name: {
+        en: "Sri Vaira Vignesh",
+        ta: "ஸ்ரீ வைர விக்னேஷ்",
+        hi: "श्री वैरा विग्नेश"
+      },
+      dob: "05-11-2003",
+      cardNumber: "5678 1234 9012 3456",
+      address: {
+        en: "Perambur, Chennai",
+        ta: "பெரம்பூர், சென்னை",
+        hi: "पेरंबूर, चेन्नई"
+      }
+    },
+    "6374697959": {
+      name: {
+        en: "Surya",
+        ta: "சூர்யா",
+        hi: "सूर्या"
+      },
+      dob: "20-09-2005",
+      cardNumber: "1234 5678 9012 3456",
+      address: {
+        en: "Nemili, Ranipet",
+        ta: "நெமிலி, ராணிப்பேட்டை",
+        hi: "नेमिली, रानीपेट"
+      }
+    }
+  };
+
+  function submitLogin() {
+    const phoneNumber = document.getElementById("rationCard").value;
+    const consent = document.getElementById("consent").checked;
+
+    if (!phoneNumber) {
+      alert("Please enter your phone number.");
+      return;
+    }
+
+    if (!consent) {
+      alert("Please provide consent to proceed.");
+      return;
+    }
+
+    // Check if the phone number exists in the database
+    const userDetails = userDatabase[phoneNumber];
+    if (!userDetails) {
+      alert("No user found with this mobile number.");
+      return;
+    }
+
+    // Save user details in local storage
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+
+    // Redirect to profile.html
+    window.location.href = "profile.html";
+  }
+</script>
+</body>
+</html>

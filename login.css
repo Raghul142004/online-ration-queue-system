@@ -1,0 +1,155 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f7fa;
+}
+
+header {
+    background: #0b3b6a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+#mainTitle {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.language select {
+    padding: 6px 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    background-color: white;
+    color: #003366;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.language select:hover {
+    border-color: #003366;
+    box-shadow: 0 0 5px rgba(0, 51, 102, 0.3);
+}
+
+.logo {
+    height: 50px;
+    margin-right: 15px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    gap: 30px;
+}
+
+.left-panel, .right-panel {
+    flex: 1;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    min-width: 300px;
+}
+
+.left-panel {
+    text-align: center;
+}
+
+.left-panel h2 {
+    color: #003366;
+}
+
+.left-panel img.illustration {
+    width: 80%;
+    margin-top: 20px;
+}
+
+.right-panel h2 {
+    margin-bottom: 20px;
+    color: #003366;
+}
+
+.right-panel label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.right-panel input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.captcha-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.captcha-box span {
+    background: #ddd;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.refresh-btn {
+    background: #003366;
+    color: white;
+    border: none;
+    padding: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.checkboxes {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+#submitBtn, #generateOTPBtn {
+    width: 100%;
+    background: #003366;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#submitBtn:hover, #generateOTPBtn:hover {
+    background: #002244;
+}
+

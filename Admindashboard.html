@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    header.dashboard-header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+
+    header.dashboard-header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header.dashboard-header p {
+      margin: 5px 0 0;
+      font-size: 1.2rem;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+      border: 1px solid #272c27;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-button:hover {
+      background-color: #45a049;
+    }
+
+    main.dashboard-content {
+      padding: 20px;
+    }
+
+    section.booked-details {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    section.booked-details h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #4CAF50;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header class="dashboard-header">
+    <a href="AdminDashboardD.html" class="back-button">Back</a>
+    <h1>Admin Dashboard</h1>
+    <p>View Booked Details</p>
+  </header>
+
+  <main class="dashboard-content">
+    <!-- Booked Details Section -->
+    <section class="booked-details">
+      <h2>Booked Details</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>Booking Date</th>
+            <th>Products</th>
+            <th>Slot</th>
+            <th>Shop</th>
+            <th>Total Amount</th>
+          </tr>
+        </thead>
+        <tbody id="bookedDetailsTable">
+          <!-- Booked details will be dynamically populated here -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>© ration queue system. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const bookedDetailsTable = document.getElementById('bookedDetailsTable');
+
+    function fetchAndUpdateData() {
+      fetch(`http://localhost:4000/api/booked-details`)
+        .then(response => response.json())
+        .then(data => {
+          bookedDetailsTable.innerHTML = '';
+          data.forEach(detail => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${detail.booking_id}</td>
+              <td>${detail.booking_date}</td>
+              <td>${Array.isArray(detail.products) ? detail.products.join(', ') : detail.products}</td>
+              <td>${detail.slot}</td>
+              <td>${detail.shop}</td>
+              <td>₹${detail.total_amount}</td>
+            `;
+            bookedDetailsTable.appendChild(row);
+          });
+        })
+        .catch(error => console.error('Error fetching booked details:', error));
+    }
+
+    // Initial fetch
+    fetchAndUpdateData();
+  </script>
+</body>
+</html>
