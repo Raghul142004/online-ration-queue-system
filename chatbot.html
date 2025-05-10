@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Ration Bot</title>
+  <link rel="stylesheet" href="chatbot.css" />
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <img src="image/WhatsApp_Image_2025-05-06_at_14.23.16_f02e717e-removebg-preview.png" alt="Bot" class="bot-avatar"/>
+      <h1>Smart Ration Bot</h1>
+    </header>
+
+    <div id="chat-box" class="chat-box">
+      <div class="bot bubble">Hi! 👋 I'm jarvis Smart Ration Assistant. Ask me anything about ration balance, stock, or shops.</div>
+    </div>
+
+    <div class="controls">
+      <input type="text" id="user-input" placeholder="Ask me anything..." />
+      <button onclick="sendMessage()">➤</button>
+      <button onclick="clearChat()" title="Clear Chat 🗑️">🗑️</button>
+    </div>
+  </div>
+
+  <script src="chatbot.js"></script>
+</body>
+</html>

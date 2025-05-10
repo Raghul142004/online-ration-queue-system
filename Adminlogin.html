@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Ration Queue System - Admin Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="gov-header">
+    <img src="rationlogo.jpg" 
+         alt="Tamil Nadu Government Logo" 
+         style="height: 100px; width: auto;">
+
+  <div class="header-text">
+    <h2 id="subtitle">SMART RATION QUEUE - Admin Login</h2>
+  </div>
+  <select id="languageSelect" class="language-select">
+    <option value="en">English</option>
+    <option value="ta">தமிழ்</option>
+  </select>
+</header>
+
+<div class="login-wrapper">
+  <div class="login-box">
+    <h3 id="loginText">LOGIN</h3>
+    <hr class="divider">
+
+    <form id="loginForm" class="login-form">
+      <label for="username" id="usernameLabel">Username</label>
+      <input type="text" id="username" placeholder="Enter Username">
+      <div class="error" id="usernameError"></div>
+
+      <label for="password" id="passwordLabel">Password</label>
+      <input type="password" id="password" placeholder="Enter Password">
+      <div class="error" id="passwordError"></div>
+
+      <label for="captcha" id="captchaLabel">Captcha</label>
+      <div class="captcha-box">
+        <input type="text" id="generatedCaptcha" disabled class="captcha-img" value="AB12CD">
+        <button type="button" id="refreshCaptcha" class="refresh-btn">↻</button>
+      </div>
+      <input type="text" id="captcha" placeholder="Enter Captcha">
+      <div class="error" id="captchaError"></div>
+
+      <button type="submit" class="login-btn" id="loginButton" >Login</button>
+
+      
+    </form> <button type="submit" class="login-btn" id="loginButton"onclick=" window.location.href = 'login.html'" >Back</button>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Smart Ration. All rights reserved.</p>
+  <p>This portal belongs to Smart Ration,| Privacy Policy | Terms of Use</p>
+</footer>
+
+<script src="style.js"></script>
+</body>
+</html>
